@@ -27,22 +27,16 @@ partial class Form1
         ((System.ComponentModel.ISupportInitialize)radiusField).BeginInit();
         SuspendLayout();
         
-        // accuracyField
         accuracyField.Location = new Point(400, 40);
-        accuracyField.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
         accuracyField.Name = "accuracyField";
         accuracyField.Size = new Size(120, 27);
         accuracyField.TabIndex = 0;
         
-        // radiusField
         radiusField.Location = new Point(550, 40);
-        radiusField.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        radiusField.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
         radiusField.Name = "radiusField";
         radiusField.Size = new Size(120, 27);
         radiusField.TabIndex = 1;
         
-        // label1
         label1.AutoSize = true;
         label1.Location = new Point(400, 0);
         label1.Name = "label1";
@@ -50,7 +44,6 @@ partial class Form1
         label1.TabIndex = 2;
         label1.Text = "Accuracy";
         
-        // label2
         label2.AutoSize = true;
         label2.Location = new Point(550, 0);
         label2.Name = "label2";
@@ -58,7 +51,6 @@ partial class Form1
         label2.TabIndex = 3;
         label2.Text = "Radius";
         
-        // run
         run.BackColor = Color.SteelBlue;
         run.FlatStyle = FlatStyle.Flat;
         run.ForeColor = Color.White;
@@ -71,7 +63,6 @@ partial class Form1
         run.Click += Run_Click;
         run.FlatAppearance.BorderSize = 0;
         
-        // analysis
         analysis.BackColor = Color.Teal;
         analysis.FlatStyle = FlatStyle.Flat;
         analysis.ForeColor = Color.White;
@@ -84,7 +75,6 @@ partial class Form1
         analysis.Click += Analysis_Click;
         analysis.FlatAppearance.BorderSize = 0;
         
-        // Form1
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1000, 600);

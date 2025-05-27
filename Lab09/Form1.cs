@@ -11,8 +11,9 @@ public partial class Form1 : Form
     private const int DefaultAccuracy = 2;
     private const float DefaultRadius = 2f;
 
-    private readonly Point _point1 = new(50, 50);
-    private readonly Point _point2 = new(700, 1950);
+    private readonly PointF _point1 = new(50, 50);
+    private readonly PointF _point2 = new(700, 1950);
+    private double full_distance;
     private float _radius = DefaultRadius;
     private int _accuracy = DefaultAccuracy;
     private bool _isAnalysisMode = false;
@@ -28,6 +29,7 @@ public partial class Form1 : Form
     {
         accuracyField.Value = _accuracy;
         radiusField.Value = (decimal)_radius;
+        full_distance = CalculateDistance(_point1, _point2);
     }
 
     private void SetupFormAppearance()
@@ -54,7 +56,7 @@ public partial class Form1 : Form
             _accuracy = 1;
             accuracyField.Value = _accuracy;
             bool result = DrawAnglePath(g, _accuracy);
-            while (!result)
+            while (result)
             {
                 _accuracy++;
                 accuracyField.Value = _accuracy;
@@ -80,30 +82,32 @@ public partial class Form1 : Form
         }
     }
 
-    private double CalculateDistance(float x, float y) => Math.Sqrt(Math.Pow(_point2.X  - x , 2) + Math.Pow(_point2.Y - y , 2));
+    private double CalculateDistance(PointF point1, PointF point2) {
+        return Math.Sqrt(Math.Pow(point2.X - point1.X, 2) + Math.Pow(point2.Y - point1.Y, 2)); 
+    }
 
     private bool DrawAnglePath(Graphics g, int n)
     {
         double angle = Atn((double)Math.Abs(_point2.Y - _point1.Y) / Math.Abs(_point2.X - _point1.X), n);
         float x = _point1.X;
         float y = _point1.Y;
-        double distance = CalculateDistance(x, y);
-        const int maxIterations = 10000;
-        int iterations = 0;
+        PointF current_point = new(x, y);
+        double current_distance = CalculateDistance(current_point, _point2);
 
         using (var brush = new SolidBrush(Color.FromArgb(80, Color.Black)))
         {
-            while (distance > _radius && iterations < maxIterations)
+            while (current_distance > _radius)
             {
                 x += DefaultStep * (float)Cos(angle, n);
                 y += DefaultStep * (float)Sin(angle, n);
                 g.FillEllipse(brush, x, y, 5, 5);
-                distance = CalculateDistance(x, y);
-                iterations++;
+                current_point.X = x;
+                current_point.Y = y;
+                current_distance = CalculateDistance(current_point, _point2);
+                if (current_distance > full_distance) return true;
             }
         }
-
-        return iterations < maxIterations;
+        return false;
     }
 
     private void Run_Click(object sender, EventArgs e)
@@ -119,10 +123,9 @@ public partial class Form1 : Form
         string projectPath = Path.GetFullPath(Path.Combine(basePath, "../../../.."));
         string resultsPath = Path.Combine(projectPath, "result/data.txt");
         var sb = new StringBuilder();
-
-        for (int r = 2; r < 30; r += 2)
+        for (double r = 0.2; r <= 20; r = (r < 1) ? r + 0.2 : r + 2)
         {
-            _radius = r;
+            _radius = (float)r;
             radiusField.Value = (decimal)_radius;
             _isAnalysisMode = true;
             this.Invalidate();
@@ -130,7 +133,6 @@ public partial class Form1 : Form
             Application.DoEvents();
             sb.AppendLine($"{_radius} {_accuracy}");
         }
-
         File.AppendAllText(resultsPath, sb.ToString());
     }
 

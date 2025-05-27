@@ -14,8 +14,8 @@ ns = []
 with open(data_path, "r") as f:
     for line in f:
         parts = line.strip().split(" ")
-        rad = float(parts[0])
-        n = float(parts[1])
+        rad = float(parts[0].replace(',', '.'))  # Замена запятой на точку
+        n = float(parts[1].replace(',', '.'))    # Замена запятой на точку
         radius.append(rad)
         ns.append(n)
 
@@ -38,7 +38,6 @@ ax.set_title("Зависимость точности от радиуса кон
 ax.set_xlabel("Радиус конечной точки", fontsize=12, labelpad=10)
 ax.set_ylabel("Точность", fontsize=12, labelpad=10)
 
-# Настройка осей
 ax.tick_params(axis='both', which='major', labelsize=10)
 ax.xaxis.set_minor_locator(AutoMinorLocator())
 ax.yaxis.set_minor_locator(AutoMinorLocator())
