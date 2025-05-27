@@ -6,13 +6,11 @@ namespace Lab09;
 
 public partial class Form1 : Form
 {
-    // Constants
-    private const float DefaultStep = 5f;
+    private const float DefaultStep = 1f;
     private const float DefaultDotSize = 15f;
     private const int DefaultAccuracy = 2;
     private const float DefaultRadius = 2f;
 
-    // Fields
     private readonly Point _point1 = new(50, 50);
     private readonly Point _point2 = new(700, 1950);
     private float _radius = DefaultRadius;
@@ -44,23 +42,18 @@ public partial class Form1 : Form
         Graphics g = e.Graphics;
         g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
         g.ScaleTransform(0.5f, 0.5f);
-
-        // Draw points
         g.FillEllipse(Brushes.Red, _point1.X, _point1.Y, DefaultDotSize, DefaultDotSize);
         g.FillEllipse(Brushes.Blue, _point2.X, _point2.Y, DefaultDotSize, DefaultDotSize);
         g.DrawEllipse(new Pen(Color.Black, 1),
-                     _point2.X + DefaultDotSize / 2 - _radius / 2,
-                     _point2.Y + DefaultDotSize / 2 - _radius / 2,
-                     _radius, _radius);
-
+                    _point2.X + DefaultDotSize / 2 - _radius / 2,
+                    _point2.Y + DefaultDotSize / 2 - _radius / 2,
+                    _radius, _radius);
         DrawLine(g);
-
         if (_isAnalysisMode)
         {
             _accuracy = 1;
             accuracyField.Value = _accuracy;
             bool result = DrawAnglePath(g, _accuracy);
-
             while (!result)
             {
                 _accuracy++;
@@ -83,13 +76,11 @@ public partial class Form1 : Form
         using (var pen = new Pen(Color.Goldenrod, 3))
         {
             g.DrawLine(pen, _point1.X, (float)(k * _point1.X + b),
-                               _point2.X, (float)(k * _point2.X + b));
+                                _point2.X, (float)(k * _point2.X + b));
         }
     }
 
-    private double CalculateDistance(float x, float y) =>
-        Math.Sqrt(Math.Pow(_point2.X + DefaultDotSize / 2 - (x + 2.5), 2) +
-        Math.Pow(_point2.Y + DefaultDotSize / 2 - (y + 2.5), 2));
+    private double CalculateDistance(float x, float y) => Math.Sqrt(Math.Pow(_point2.X  - x , 2) + Math.Pow(_point2.Y - y , 2));
 
     private bool DrawAnglePath(Graphics g, int n)
     {
@@ -102,7 +93,7 @@ public partial class Form1 : Form
 
         using (var brush = new SolidBrush(Color.FromArgb(80, Color.Black)))
         {
-            while (distance > _radius / 2 && iterations < maxIterations)
+            while (distance > _radius && iterations < maxIterations)
             {
                 x += DefaultStep * (float)Cos(angle, n);
                 y += DefaultStep * (float)Sin(angle, n);
@@ -142,8 +133,8 @@ public partial class Form1 : Form
 
         File.AppendAllText(resultsPath, sb.ToString());
     }
-    
-    private static long Factorial(int x)
+
+    private static double Factorial(int x)
     {
         long result = 1;
         for (int i = 2; i <= x; i++)
@@ -151,19 +142,19 @@ public partial class Form1 : Form
         return result;
     }
 
-    private static double Sin(double x, int n)
+        private static double Sin(double x, int n)
     {
         double answer = 0;
-        for (int i = 1; i <= n; i++)
-            answer += Math.Pow(-1, i - 1) * Math.Pow(x, 2 * i - 1) / Factorial(2 * i - 1);
+        for (int i = 0; i < n; i++)
+            answer += Math.Pow(-1, i) * Math.Pow(x, 2 * i+1) / Factorial(2 * i+1);
         return answer;
     }
 
     private static double Cos(double x, int n)
     {
         double answer = 0;
-        for (int i = 1; i <= n; i++)
-            answer += Math.Pow(-1, i - 1) * Math.Pow(x, 2 * i - 2) / Factorial(2 * i - 2);
+        for (int i = 0; i < n; i++)
+            answer += Math.Pow(-1, i) * Math.Pow(x, 2 * i) / Factorial(2 * i);
         return answer;
     }
 
@@ -173,8 +164,8 @@ public partial class Form1 : Form
             return Math.Sign(x) * Math.PI / 2 - Atn(1 / x, n);
 
         double result = 0;
-        for (int i = 1; i <= n; i++)
-            result += Math.Pow(-1, i - 1) * Math.Pow(x, 2 * i - 1) / (2 * i - 1);
+        for (int i = 0; i < n; i++)
+            result += Math.Pow(-1, i) * Math.Pow(x, 2 * i + 1) / (2 * i + 1);
         return result;
     }
 }

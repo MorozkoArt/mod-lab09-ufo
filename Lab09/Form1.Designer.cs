@@ -28,14 +28,14 @@ partial class Form1
         SuspendLayout();
         
         // accuracyField
-        accuracyField.Location = new Point(500, 20);
+        accuracyField.Location = new Point(400, 40);
         accuracyField.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
         accuracyField.Name = "accuracyField";
         accuracyField.Size = new Size(120, 27);
         accuracyField.TabIndex = 0;
         
         // radiusField
-        radiusField.Location = new Point(500, 50);
+        radiusField.Location = new Point(550, 40);
         radiusField.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
         radiusField.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
         radiusField.Name = "radiusField";
@@ -44,7 +44,7 @@ partial class Form1
         
         // label1
         label1.AutoSize = true;
-        label1.Location = new Point(20, 0);
+        label1.Location = new Point(400, 0);
         label1.Name = "label1";
         label1.Size = new Size(67, 20);
         label1.TabIndex = 2;
@@ -52,7 +52,7 @@ partial class Form1
         
         // label2
         label2.AutoSize = true;
-        label2.Location = new Point(20, 50);
+        label2.Location = new Point(550, 0);
         label2.Name = "label2";
         label2.Size = new Size(53, 20);
         label2.TabIndex = 3;
@@ -62,7 +62,7 @@ partial class Form1
         run.BackColor = Color.SteelBlue;
         run.FlatStyle = FlatStyle.Flat;
         run.ForeColor = Color.White;
-        run.Location = new Point(20, 110);
+        run.Location = new Point(400, 80);
         run.Name = "run";
         run.Size = new Size(120, 35);
         run.TabIndex = 4;
@@ -75,7 +75,7 @@ partial class Form1
         analysis.BackColor = Color.Teal;
         analysis.FlatStyle = FlatStyle.Flat;
         analysis.ForeColor = Color.White;
-        analysis.Location = new Point(20, 155);
+        analysis.Location = new Point(550, 80);
         analysis.Name = "analysis";
         analysis.Size = new Size(120, 35);
         analysis.TabIndex = 5;
